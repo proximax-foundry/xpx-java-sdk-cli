@@ -43,7 +43,9 @@ public class ProximaXCli {
                 .withCommands(
                     ProximaXVersion.class,
                     ProximaXHelp.class,
-                    ProximaXAnnounce.class
+                    ProximaXAnnounce.class,
+                    ProximaXWhoami.class,
+                    ProximaXClear.class
                 );
 
         return builder.build();
