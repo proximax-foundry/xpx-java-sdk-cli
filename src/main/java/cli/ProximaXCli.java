@@ -1,5 +1,6 @@
 package cli;
 
+import cli.Commands.*;
 import com.github.rvesse.airline.Cli;
 import com.github.rvesse.airline.builder.CliBuilder;
 import com.github.rvesse.airline.parser.errors.ParseArgumentsUnexpectedException;
@@ -7,8 +8,11 @@ import com.github.rvesse.airline.parser.errors.ParseCommandMissingException;
 import com.github.rvesse.airline.parser.errors.ParseCommandUnrecognizedException;
 import com.github.rvesse.airline.parser.errors.ParseException;
 import com.github.rvesse.airline.parser.errors.ParseOptionMissingException;
+import io.nem.xpx.facade.connection.RemotePeerConnection;
 
 public class ProximaXCli {
+
+    public static RemotePeerConnection remotePeerConnection = new RemotePeerConnection("http://dev-gateway.internal.proximax.io:8881");
 
     public static void main(String... args) {
 
@@ -39,13 +43,16 @@ public class ProximaXCli {
     private static Cli<ProximaXCommand> getProximaXCommandCLI() {
         //noinspection unchecked
         CliBuilder<ProximaXCommand> builder = Cli.<ProximaXCommand>builder("proximax")
-                .withDescription("CLI to access ProximaX Storage")
+                .withDescription("A CLI to access ProximaX Storage")
                 .withCommands(
                     ProximaXVersion.class,
                     ProximaXHelp.class,
                     ProximaXAnnounce.class,
                     ProximaXWhoami.class,
-                    ProximaXClear.class
+                    ProximaXClear.class,
+                    ProximaXUpload.class,
+                    ProximaXDownload.class,
+                    ProximaXSearch.class
                 );
 
         return builder.build();

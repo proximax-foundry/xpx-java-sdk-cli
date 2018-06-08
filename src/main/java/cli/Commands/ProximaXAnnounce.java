@@ -1,8 +1,6 @@
-package cli;
+package cli.Commands;
 
 import com.github.rvesse.airline.annotations.Command;
-import com.github.rvesse.airline.annotations.Option;
-import com.github.rvesse.airline.annotations.OptionType;
 
 import java.io.IOException;
 import java.io.PrintWriter;

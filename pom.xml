@@ -21,17 +21,27 @@
             <version>2.5.0</version>
         </dependency>
         <dependency>
-            <groupId>io.airlift</groupId>
-            <artifactId>airline</artifactId>
-            <version>0.8</version>
+            <groupId>io.nem.xpx</groupId>
+            <artifactId>xpx-java-sdk</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>io.nem.xpx</groupId>-->
-            <!--<artifactId>xpx-java-sdk</artifactId>-->
-            <!--<version>1.0.0</version>-->
-            <!--<scope>compile</scope>-->
-        <!--</dependency>-->
     </dependencies>
+
+    <distributionManagement>
+        <repository>
+            <uniqueVersion>false</uniqueVersion>
+            <id>nexus</id>
+            <name>proximax nexus release</name>
+            <url>https://nexus.internal.proximax.io/repository/maven-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <uniqueVersion>true</uniqueVersion>
+            <id>nexus</id>
+            <name>proximax nexus snapshot</name>
+            <url>https://nexus.internal.proximax.io/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
 
     <build>
         <plugins>

@@ -14,9 +14,10 @@ INSTALLATION
     # {$} is a directory where you store the project
     java -jar "{$}/xpx-cli/target/xpx-cli-1.0.0-SNAPSHOT.jar" "$@"
     ```
+3. `chmod+x proximax`
  
-3. Copy the script to your local bin to execute 
+4. Copy the script to your local bin to execute 
 
     ```cp proximax /usr/local/bin```
 
-4. Run `proximax` from anywhere
+5. Run `proximax` from anywhere

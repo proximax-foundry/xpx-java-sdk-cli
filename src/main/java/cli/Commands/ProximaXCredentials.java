@@ -1,4 +1,4 @@
-package cli;
+package cli.Commands;
 
 import com.github.rvesse.airline.annotations.Option;
 import com.github.rvesse.airline.annotations.OptionType;
