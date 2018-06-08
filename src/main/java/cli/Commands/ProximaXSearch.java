@@ -30,11 +30,11 @@ public class ProximaXSearch implements ProximaXCommand {
 
     @Override
     public void run() {
-        String private_key = "deaae199f8e511ec51eb0046cf8d78dc481e20a340d003bbfcc3a66623d09763";
-        String public_key = "36e6fbc1cc5c3ef49d313721650b98d7d7d126a4f731d70071f4f3b4798cdc85";
+        String privateKey = "deaae199f8e511ec51eb0046cf8d78dc481e20a340d003bbfcc3a66623d09763";
+        String publicKey = "36e6fbc1cc5c3ef49d313721650b98d7d7d126a4f731d70071f4f3b4798cdc85";
         try {
             Search search = new Search(remotePeerConnection);
-            List<ResourceHashMessageJsonEntity> result = search.searchByKeyword(private_key, public_key, keyword);
+            List<ResourceHashMessageJsonEntity> result = search.searchByKeyword(privateKey, publicKey, keyword);
             Assert.checkNonNull(result);
         } catch (ApiException | InterruptedException | ExecutionException | PeerConnectionNotFoundException e) {
             e.printStackTrace();
