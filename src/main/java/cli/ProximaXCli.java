@@ -3,11 +3,7 @@ package cli;
 import cli.Commands.*;
 import com.github.rvesse.airline.Cli;
 import com.github.rvesse.airline.builder.CliBuilder;
-import com.github.rvesse.airline.parser.errors.ParseArgumentsUnexpectedException;
-import com.github.rvesse.airline.parser.errors.ParseCommandMissingException;
-import com.github.rvesse.airline.parser.errors.ParseCommandUnrecognizedException;
-import com.github.rvesse.airline.parser.errors.ParseException;
-import com.github.rvesse.airline.parser.errors.ParseOptionMissingException;
+import com.github.rvesse.airline.parser.errors.*;
 import io.nem.xpx.facade.connection.RemotePeerConnection;
 
 public class ProximaXCli {

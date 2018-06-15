@@ -11,17 +11,18 @@ public class ProximaXAnnounce extends ProximaXCredentials {
 
     @Override
     public void run() {
-        if (private_key != null) {
+        if (privateKey != null || publicKey != null) {
             try {
-                PrintWriter file = new PrintWriter("../private_key");
-                file.println(private_key);
+                PrintWriter file = new PrintWriter("./credentials");
+                file.println(privateKey);
+                file.println(publicKey);
                 file.close();
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
-            System.out.println("Private key has been successfully set");
+            System.out.println("Private key and public key have been successfully set");
         } else {
-            System.out.println("You have to set the private key. Run `proximax help announce` to see the help.");
+            System.out.println("You have to set the private/public key. Run `proximax help announce` to see the help.");
         }
     }
 

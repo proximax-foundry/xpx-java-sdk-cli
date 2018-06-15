@@ -13,7 +13,10 @@ import org.nem.core.crypto.PrivateKey;
 import org.nem.core.crypto.PublicKey;
 import org.pmw.tinylog.Logger;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.List;
+import java.util.Scanner;
 import java.util.concurrent.ExecutionException;
 
 import static cli.ProximaXCli.remotePeerConnection;
@@ -21,6 +24,9 @@ import static cli.ProximaXCli.remotePeerConnection;
 @Command(name = "search",
         description = "Search using Keywords")
 public class ProximaXSearch implements ProximaXCommand {
+    private String publicKey;
+    private String privateKey;
+
 
     @Option(type = OptionType.COMMAND,
             name = {"-k", "--keyword"},
@@ -28,14 +34,33 @@ public class ProximaXSearch implements ProximaXCommand {
             description = "Keyword to search")
     protected String keyword;
 
+    private void readCredentials() {
+        File file = new File("./credentials");
+        if (file.exists()) {
+            Scanner input = null;
+            try {
+                input = new Scanner(file);
+                publicKey = input.nextLine();
+                privateKey = input.nextLine();
+            } catch (FileNotFoundException ex) {
+                ex.printStackTrace();
+            } finally {
+                if (input != null) {
+                    input.close();
+                }
+            }
+        } else {
+            System.out.println("You have to set the private/public key. Run `proximax help announce` to see the help.");
+        }
+    }
+
     @Override
     public void run() {
-        String privateKey = "deaae199f8e511ec51eb0046cf8d78dc481e20a340d003bbfcc3a66623d09763";
-        String publicKey = "36e6fbc1cc5c3ef49d313721650b98d7d7d126a4f731d70071f4f3b4798cdc85";
         try {
+            readCredentials();
             Search search = new Search(remotePeerConnection);
-            List<ResourceHashMessageJsonEntity> result = search.searchByKeyword(privateKey, publicKey, keyword);
-            Assert.checkNonNull(result);
+            List<ResourceHashMessageJsonEntity> result = search.searchByName(privateKey, publicKey, keyword);
+            System.out.println(result);
         } catch (ApiException | InterruptedException | ExecutionException | PeerConnectionNotFoundException e) {
             e.printStackTrace();
         }

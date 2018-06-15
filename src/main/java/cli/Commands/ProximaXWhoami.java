@@ -1,5 +1,6 @@
 package cli.Commands;
 
+import cli.ProximaXCli;
 import com.github.rvesse.airline.annotations.Command;
 
 import java.io.File;
@@ -12,15 +13,13 @@ public class ProximaXWhoami implements ProximaXCommand {
 
     @Override
     public void run() {
-        File file = new File("../private_key");
+        File file = new File("./credentials");
         if (file.exists()) {
             Scanner input = null;
             try {
                 input = new Scanner(file);
-                while (input.hasNextLine()) {
-                    String contents = input.nextLine();
-                    System.out.println("Your private key is: " + contents);
-                }
+                System.out.println("Your private key is: " + input.nextLine());
+                System.out.println("Your public key is: " + input.nextLine());
             } catch (FileNotFoundException ex) {
                 ex.printStackTrace();
             } finally {
@@ -29,7 +28,7 @@ public class ProximaXWhoami implements ProximaXCommand {
                 }
             }
         } else {
-            System.out.println("You have to set the private key. Run `proximax help announce` to see the help.");
+            System.out.println("You have to set the private/public key. Run `proximax help announce` to see the help.");
         }
     }
 
