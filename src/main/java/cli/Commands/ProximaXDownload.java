@@ -28,7 +28,7 @@ public class ProximaXDownload implements ProximaXCommand {
     @Option(type = OptionType.COMMAND,
             name = {"-s", "--secure"},
             title = "secure download",
-            description = "Apply Nem keys privacy strategy")
+            description = "Apply NEM keys privacy strategy")
     protected boolean isSecure = false;
 
     @Option(type = OptionType.COMMAND,

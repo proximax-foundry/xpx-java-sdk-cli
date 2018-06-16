@@ -1,5 +1,6 @@
 package cli.Commands;
 
+import com.github.rvesse.airline.annotations.Arguments;
 import com.github.rvesse.airline.annotations.Command;
 import com.github.rvesse.airline.annotations.Option;
 import com.github.rvesse.airline.annotations.OptionType;
@@ -15,6 +16,7 @@ import org.pmw.tinylog.Logger;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.ExecutionException;
@@ -27,12 +29,29 @@ public class ProximaXSearch implements ProximaXCommand {
     private String publicKey;
     private String privateKey;
 
-
     @Option(type = OptionType.COMMAND,
             name = {"-k", "--keyword"},
             title = "keyword",
-            description = "Keyword to search")
-    protected String keyword;
+            description = "Search by keyword")
+    protected String keyword = "";
+
+    @Option(type = OptionType.COMMAND,
+            name = {"-n", "--name"},
+            title = "name",
+            description = "Search by name")
+    protected String name = "";
+
+    @Option(type = OptionType.COMMAND,
+            name = {"-key"},
+            title = "meta data key/value",
+            description = "Key to search")
+    protected String key = "";
+
+    @Option(type = OptionType.COMMAND,
+            name = {"-value"},
+            title = "meta data key/value",
+            description = "Value to search")
+    protected String value = "";
 
     private void readCredentials() {
         File file = new File("./credentials");
@@ -59,8 +78,18 @@ public class ProximaXSearch implements ProximaXCommand {
         try {
             readCredentials();
             Search search = new Search(remotePeerConnection);
-            List<ResourceHashMessageJsonEntity> result = search.searchByName(privateKey, publicKey, keyword);
-            System.out.println(result);
+            if (!keyword.equals("") && name.equals("") && key.equals("") && value.equals("")) {
+                List<ResourceHashMessageJsonEntity> result = search.searchByKeyword(privateKey, publicKey, keyword);
+                System.out.println(result);
+            } else if (keyword.equals("") && !name.equals("") && key.equals("") && value.equals("")) {
+                List<ResourceHashMessageJsonEntity> result = search.searchByName(privateKey, publicKey, name);
+                System.out.println(result);
+            } else if (keyword.equals("") && keyword.equals("") && !key.equals("") && !value.equals("")) {
+                List<ResourceHashMessageJsonEntity> result = search.searchByMetaDataKeyValue(privateKey, publicKey, key, value);
+                System.out.println(result);
+            } else {
+                System.out.println("Check your query or run `proximax help search` to see the help.");
+            }
         } catch (ApiException | InterruptedException | ExecutionException | PeerConnectionNotFoundException e) {
             e.printStackTrace();
         }
