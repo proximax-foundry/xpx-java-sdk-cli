@@ -20,6 +20,7 @@ import java.util.Map;
 import java.util.Scanner;
 import static java.util.Collections.singletonMap;
 import static cli.ProximaXCli.remotePeerConnection;
+import static org.apache.http.protocol.HTTP.ASCII;
 
 @Command(name = "upload",
         description = "Upload the file")
@@ -200,14 +201,26 @@ public class ProximaXUpload implements ProximaXCommand {
                     keywords = (String) object.get("keywords");
 //                    metadata = (String) object.get("metadata");
 
+//                    UploadTextDataParameter parameter = UploadTextDataParameter.create()
+//                            .senderPrivateKey(privateKey)
+//                            .receiverPublicKey(publicKey)
+//                            .data(data)
+//                            .name(name)
+//                            .contentType(TEXT_PLAIN.toString())
+//                            .encoding(encoding)
+//                            .keywords(keywords)
+////                            .metadata(metadata)
+//                            .build();
+
+
                     UploadTextDataParameter parameter = UploadTextDataParameter.create()
-                            .senderPrivateKey(privateKey)
-                            .receiverPublicKey(publicKey)
-                            .data(data)
-                            .name(name)
+                            .senderPrivateKey("deaae199f8e511ec51eb0046cf8d78dc481e20a340d003bbfcc3a66623d09763")
+                            .receiverPublicKey("36e6fbc1cc5c3ef49d313721650b98d7d7d126a4f731d70071f4f3b4798cdc85")
+                            .data(new String("plain - the quick brown fox jumps over the lazy dog ASCII".getBytes()))
+                            .name("TEST_NAME_1")
                             .contentType(TEXT_PLAIN.toString())
-                            .encoding(encoding)
-                            .keywords(keywords)
+                            .encoding("UTF-8")
+                            .keywords("plain,data")
 //                            .metadata(metadata)
                             .build();
 
