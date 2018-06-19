@@ -55,8 +55,8 @@ public class ProximaXDownload implements ProximaXCommand {
             Scanner input = null;
             try {
                 input = new Scanner(file);
-                publicKey = input.nextLine();
                 privateKey = input.nextLine();
+                publicKey = input.nextLine();
             } catch (FileNotFoundException ex) {
                 ex.printStackTrace();
             } finally {
@@ -129,6 +129,7 @@ public class ProximaXDownload implements ProximaXCommand {
                     System.out.println("You have to choose either `-b`, `-t` or `-f` only.");
                 }
             }
+            System.exit(0);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -4,7 +4,6 @@ import com.github.rvesse.airline.annotations.Arguments;
 import com.github.rvesse.airline.annotations.Command;
 import com.github.rvesse.airline.annotations.Option;
 import com.github.rvesse.airline.annotations.OptionType;
-import com.sun.tools.javac.util.Assert;
 import io.nem.xpx.exceptions.ApiException;
 import io.nem.xpx.exceptions.PeerConnectionNotFoundException;
 import io.nem.xpx.facade.search.Search;
@@ -59,8 +58,8 @@ public class ProximaXSearch implements ProximaXCommand {
             Scanner input = null;
             try {
                 input = new Scanner(file);
-                publicKey = input.nextLine();
                 privateKey = input.nextLine();
+                publicKey = input.nextLine();
             } catch (FileNotFoundException ex) {
                 ex.printStackTrace();
             } finally {
@@ -93,5 +92,6 @@ public class ProximaXSearch implements ProximaXCommand {
         } catch (ApiException | InterruptedException | ExecutionException | PeerConnectionNotFoundException e) {
             e.printStackTrace();
         }
+        System.exit(0);
     }
 }

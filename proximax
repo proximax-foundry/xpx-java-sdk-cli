@@ -1,5 +1,3 @@
 #!/bin/bash
 # proximax
-#java -jar "/Users/zytfo/Desktop/ProximaX/xpx-cli/target/xpx-cli-1.0.0-SNAPSHOT.jar" "$@"
-java -jar "/Users/zytfo/Desktop/ProximaX/xpx-cli/target/xpx-cli-1.0.0-SNAPSHOT-jar-with-dependencies.jar" "$@"
-#java -jar "/Users/zytfo/Desktop/ProximaX/xpx-cli/target/xpx-cli-1.0.0-SNAPSHOT-shaded.jar" "$@"
+java -jar /Users/zytfo/Desktop/ProximaX/xpx-cli/target/xpx-cli-1.0.0-SNAPSHOT.jar $*

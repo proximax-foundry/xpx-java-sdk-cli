@@ -64,8 +64,8 @@ public class ProximaXUpload implements ProximaXCommand {
             Scanner input = null;
             try {
                 input = new Scanner(file);
-                publicKey = input.nextLine();
                 privateKey = input.nextLine();
+                publicKey = input.nextLine();
             } catch (FileNotFoundException ex) {
                 ex.printStackTrace();
             } finally {
@@ -86,6 +86,7 @@ public class ProximaXUpload implements ProximaXCommand {
         File file = new File(".");
         String keywords;
         Map<String, String> metadata;
+        String key, value;
         try {
             if (isBinary && !isFile && !isZip && !isMultiple && !isText) {
                 String data, name, contentType;
@@ -96,7 +97,10 @@ public class ProximaXUpload implements ProximaXCommand {
                     name = (String) object.get("name");
                     contentType = (String) object.get("contentType");
                     keywords = (String) object.get("keywords");
-//                    metadata = (String) object.get("metadata");
+                    JSONObject meta = (JSONObject) object.get("metadata");
+                    key = meta.keySet().iterator().next().toString();
+                    value = (String) meta.get(key);
+                    metadata = singletonMap(key, value);
 
                     UploadBinaryParameter parameter = UploadBinaryParameter.create()
                             .senderPrivateKey(privateKey)
@@ -105,7 +109,7 @@ public class ProximaXUpload implements ProximaXCommand {
                             .name(name)
                             .contentType(contentType)
                             .keywords(keywords)
-//                            .metadata(metadata)
+                            .metadata(metadata)
                             .build();
 
                     final UploadResult uploadResult = upload.uploadBinary(parameter);
@@ -120,14 +124,17 @@ public class ProximaXUpload implements ProximaXCommand {
                     JSONObject object = (JSONObject) fileObj;
                     _file = (String) object.get("file");
                     keywords = (String) object.get("keywords");
-//                    metadata = (String) object.get("metadata");
+                    JSONObject meta = (JSONObject) object.get("metadata");
+                    key = meta.keySet().iterator().next().toString();
+                    value = (String) meta.get(key);
+                    metadata = singletonMap(key, value);
 
                     UploadFileParameter parameter = UploadFileParameter.create()
                             .senderPrivateKey(privateKey)
                             .receiverPublicKey(publicKey)
                             .file(file)
                             .keywords(keywords)
-//                            .metadata(metadata)
+                            .metadata(metadata)
                             .build();
 
                     final UploadResult uploadResult = upload.uploadFile(parameter);
@@ -148,14 +155,17 @@ public class ProximaXUpload implements ProximaXCommand {
                         files.add(iterator.next());
                     }
                     keywords = (String) object.get("keywords");
-//                    metadata = (String) object.get("metadata");
+                    JSONObject meta = (JSONObject) object.get("metadata");
+                    key = meta.keySet().iterator().next().toString();
+                    value = (String) meta.get(key);
+                    metadata = singletonMap(key, value);
 
                     UploadFilesAsZipParameter parameter = UploadFilesAsZipParameter.create()
                             .senderPrivateKey(privateKey)
                             .receiverPublicKey(publicKey)
                             .zipFileName(zipFileName)
                             .keywords(keywords)
-//                            .metadata(metadata)
+                            .metadata(metadata)
                             .build();
 
                     final UploadResult uploadResult = upload.uploadFilesAsZip(parameter);
@@ -175,13 +185,16 @@ public class ProximaXUpload implements ProximaXCommand {
                         files.add(iterator.next());
                     }
                     keywords = (String) object.get("keywords");
-//                    metadata = (String) object.get("metadata");
+                    JSONObject meta = (JSONObject) object.get("metadata");
+                    key = meta.keySet().iterator().next().toString();
+                    value = (String) meta.get(key);
+                    metadata = singletonMap(key, value);
 
                     UploadMultipleFilesParameter parameter = UploadMultipleFilesParameter.create()
                             .senderPrivateKey(privateKey)
                             .receiverPublicKey(publicKey)
                             .keywords(keywords)
-//                            .metadata(metadata)
+                            .metadata(metadata)
                             .build();
 
                     final MultiFileUploadResult uploadResult = upload.uploadMultipleFiles(parameter);
@@ -199,29 +212,20 @@ public class ProximaXUpload implements ProximaXCommand {
                     contentType = (String) object.get("contentType");
                     encoding = (String) object.get("encoding");
                     keywords = (String) object.get("keywords");
-//                    metadata = (String) object.get("metadata");
-
-//                    UploadTextDataParameter parameter = UploadTextDataParameter.create()
-//                            .senderPrivateKey(privateKey)
-//                            .receiverPublicKey(publicKey)
-//                            .data(data)
-//                            .name(name)
-//                            .contentType(TEXT_PLAIN.toString())
-//                            .encoding(encoding)
-//                            .keywords(keywords)
-////                            .metadata(metadata)
-//                            .build();
-
+                    JSONObject meta = (JSONObject) object.get("metadata");
+                    key = meta.keySet().iterator().next().toString();
+                    value = (String) meta.get(key);
+                    metadata = singletonMap(key, value);
 
                     UploadTextDataParameter parameter = UploadTextDataParameter.create()
-                            .senderPrivateKey("deaae199f8e511ec51eb0046cf8d78dc481e20a340d003bbfcc3a66623d09763")
-                            .receiverPublicKey("36e6fbc1cc5c3ef49d313721650b98d7d7d126a4f731d70071f4f3b4798cdc85")
-                            .data(new String("plain - the quick brown fox jumps over the lazy dog ASCII".getBytes()))
-                            .name("TEST_NAME_1")
+                            .senderPrivateKey(privateKey)
+                            .receiverPublicKey(publicKey)
+                            .data(data)
+                            .name(name)
                             .contentType(TEXT_PLAIN.toString())
-                            .encoding("UTF-8")
-                            .keywords("plain,data")
-//                            .metadata(metadata)
+                            .encoding(encoding)
+                            .keywords(keywords)
+                            .metadata(metadata)
                             .build();
 
                     final UploadResult uploadResult = upload.uploadTextData(parameter);
@@ -232,6 +236,7 @@ public class ProximaXUpload implements ProximaXCommand {
             } else {
                 System.out.println("You have to choose either `-b`, `-f`, `-z`, `-m` or `-t`. Run `proximax help upload` to see the help.");
             }
+            System.exit(0);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
