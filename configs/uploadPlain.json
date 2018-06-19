@@ -1,7 +1,7 @@
 {
-  "file": "",
-  "keywords": "",
+  "file": "test_pdf_file_v1.pdf",
+  "keywords": "test",
   "metadata": {
-    "": ""
+    "key2": "value2"
   }
 }

@@ -83,7 +83,7 @@ public class ProximaXUpload implements ProximaXCommand {
         Upload upload = new Upload(remotePeerConnection);
         readCredentials();
         JSONParser parser = new JSONParser();
-        File file = new File(".");
+        File file = new File("");
         String keywords;
         Map<String, String> metadata;
         String key, value;
@@ -91,7 +91,7 @@ public class ProximaXUpload implements ProximaXCommand {
             if (isBinary && !isFile && !isZip && !isMultiple && !isText) {
                 String data, name, contentType;
                 try {
-                    Object fileObj = parser.parse(new FileReader(file.getAbsoluteFile() + "/configs/uploadBinary.json"));
+                    Object fileObj = parser.parse(new FileReader(file.getAbsolutePath() + "/configs/uploadBinary.json"));
                     JSONObject object = (JSONObject) fileObj;
                     data = (String) object.get("data");
                     name = (String) object.get("name");
@@ -105,7 +105,7 @@ public class ProximaXUpload implements ProximaXCommand {
                     UploadBinaryParameter parameter = UploadBinaryParameter.create()
                             .senderPrivateKey(privateKey)
                             .receiverPublicKey(publicKey)
-                            .data(FileUtils.readFileToByteArray(new File(file.getAbsoluteFile() + data)))
+                            .data(FileUtils.readFileToByteArray(new File(file.getAbsolutePath() + "/files/" + data)))
                             .name(name)
                             .contentType(contentType)
                             .keywords(keywords)
@@ -120,7 +120,7 @@ public class ProximaXUpload implements ProximaXCommand {
             } else if (!isBinary && isFile && !isZip && !isMultiple && !isText) {
                 String _file;
                 try {
-                    Object fileObj = parser.parse(new FileReader(file.getAbsoluteFile() + "/configs/uploadPlain.json"));
+                    Object fileObj = parser.parse(new FileReader(file.getAbsolutePath() + "/configs/uploadPlain.json"));
                     JSONObject object = (JSONObject) fileObj;
                     _file = (String) object.get("file");
                     keywords = (String) object.get("keywords");
@@ -132,7 +132,7 @@ public class ProximaXUpload implements ProximaXCommand {
                     UploadFileParameter parameter = UploadFileParameter.create()
                             .senderPrivateKey(privateKey)
                             .receiverPublicKey(publicKey)
-                            .file(file)
+                            .file(new File(file.getAbsolutePath() + "/files/" + _file))
                             .keywords(keywords)
                             .metadata(metadata)
                             .build();
@@ -146,7 +146,7 @@ public class ProximaXUpload implements ProximaXCommand {
                 String zipFileName;
                 ArrayList<String> files = new ArrayList<>();
                 try {
-                    Object fileObj = parser.parse(new FileReader(file.getAbsoluteFile() + "/configs/uploadZip.json"));
+                    Object fileObj = parser.parse(new FileReader(file.getAbsolutePath() + "/configs/uploadZip.json"));
                     JSONObject object = (JSONObject) fileObj;
                     zipFileName = (String) object.get("zipFileName");
                     JSONArray fileNames = (JSONArray) object.get("file");
@@ -177,7 +177,7 @@ public class ProximaXUpload implements ProximaXCommand {
                 String zipFileName;
                 ArrayList<String> files = new ArrayList<>();
                 try {
-                    Object fileObj = parser.parse(new FileReader(file.getAbsoluteFile() + "/configs/uploadMultiple.json"));
+                    Object fileObj = parser.parse(new FileReader(file.getAbsolutePath() + "/configs/uploadMultiple.json"));
                     JSONObject object = (JSONObject) fileObj;
                     JSONArray fileNames = (JSONArray) object.get("file");
                     Iterator<String> iterator = fileNames.iterator();
@@ -205,7 +205,7 @@ public class ProximaXUpload implements ProximaXCommand {
             } else if (!isBinary && !isFile && !isZip && !isMultiple && isText) {
                 String data, name, contentType, encoding;
                 try {
-                    Object fileObj = parser.parse(new FileReader(file.getAbsoluteFile() + "/configs/uploadText.json"));
+                    Object fileObj = parser.parse(new FileReader(file.getAbsolutePath() + "/configs/uploadText.json"));
                     JSONObject object = (JSONObject) fileObj;
                     data = (String) object.get("data");
                     name = (String) object.get("name");

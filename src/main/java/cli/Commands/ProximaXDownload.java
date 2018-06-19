@@ -129,9 +129,9 @@ public class ProximaXDownload implements ProximaXCommand {
                     System.out.println("You have to choose either `-b`, `-t` or `-f` only.");
                 }
             }
-            System.exit(0);
         } catch (Exception e) {
             e.printStackTrace();
         }
+        System.exit(0);
     }
 }
