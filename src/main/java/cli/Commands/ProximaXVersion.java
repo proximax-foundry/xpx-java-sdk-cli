@@ -9,6 +9,6 @@ public class ProximaXVersion implements ProximaXCommand {
 
     @Override
     public void run() {
-        System.out.println("The version of ProximaX SDK is {version}");
+        System.out.println("The version of ProximaX SDK is 0.1.0-beta.1-SNAPSHOT");
     }
 }
