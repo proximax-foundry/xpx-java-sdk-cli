@@ -14,10 +14,8 @@ import org.json.simple.parser.JSONParser;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
+
 import static java.util.Collections.singletonMap;
 import static cli.ProximaXCli.remotePeerConnection;
 import static org.apache.http.protocol.HTTP.ASCII;
@@ -144,7 +142,7 @@ public class ProximaXUpload implements ProximaXCommand {
                 }
             } else if (!isBinary && !isFile && isZip && !isMultiple && !isText) {
                 String zipFileName;
-                ArrayList<String> files = new ArrayList<>();
+                List<File> files = new ArrayList<>();
                 try {
                     Object fileObj = parser.parse(new FileReader(file.getAbsolutePath() + "/configs/uploadZip.json"));
                     JSONObject object = (JSONObject) fileObj;
@@ -152,7 +150,7 @@ public class ProximaXUpload implements ProximaXCommand {
                     JSONArray fileNames = (JSONArray) object.get("file");
                     Iterator<String> iterator = fileNames.iterator();
                     while (iterator.hasNext()) {
-                        files.add(iterator.next());
+                        files.add(new File(file.getAbsolutePath() + "/files/" + iterator.next()));
                     }
                     keywords = (String) object.get("keywords");
                     JSONObject meta = (JSONObject) object.get("metadata");
@@ -164,6 +162,7 @@ public class ProximaXUpload implements ProximaXCommand {
                             .senderPrivateKey(privateKey)
                             .receiverPublicKey(publicKey)
                             .zipFileName(zipFileName)
+                            .addFiles(files)
                             .keywords(keywords)
                             .metadata(metadata)
                             .build();
@@ -175,14 +174,14 @@ public class ProximaXUpload implements ProximaXCommand {
                 }
             } else if (!isBinary && !isFile && !isZip && isMultiple && !isText) {
                 String zipFileName;
-                ArrayList<String> files = new ArrayList<>();
+                List<File> files = new ArrayList<>();
                 try {
                     Object fileObj = parser.parse(new FileReader(file.getAbsolutePath() + "/configs/uploadMultiple.json"));
                     JSONObject object = (JSONObject) fileObj;
                     JSONArray fileNames = (JSONArray) object.get("file");
                     Iterator<String> iterator = fileNames.iterator();
                     while (iterator.hasNext()) {
-                        files.add(iterator.next());
+                        files.add(new File(file.getAbsolutePath() + "/files/" + iterator.next()));
                     }
                     keywords = (String) object.get("keywords");
                     JSONObject meta = (JSONObject) object.get("metadata");
@@ -193,12 +192,14 @@ public class ProximaXUpload implements ProximaXCommand {
                     UploadMultipleFilesParameter parameter = UploadMultipleFilesParameter.create()
                             .senderPrivateKey(privateKey)
                             .receiverPublicKey(publicKey)
+                            .addFiles(files)
                             .keywords(keywords)
                             .metadata(metadata)
                             .build();
 
                     final MultiFileUploadResult uploadResult = upload.uploadMultipleFiles(parameter);
-                    System.out.println(uploadResult.getFileUploadResults());
+                    for (int i = 0; i < files.size(); i++)
+                        System.out.println("Your NEM hash for file #" + i + " is: " + uploadResult.getFileUploadResults().get(i).getUploadResult().getNemHash());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

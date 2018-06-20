@@ -1,9 +1,10 @@
 {
   "file": [
-    ""
+    "test_file.mov",
+    "test_pdf_file_v1.pdf"
   ],
-  "keywords": "",
+  "keywords": "test,files",
   "metadata": {
-    "": ""
+    "key4": "value4"
   }
 }
