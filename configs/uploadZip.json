@@ -1,11 +1,10 @@
 {
-  "zipFileName": "zip_file_name",
+  "zipFileName": "",
   "file": [
-    "test_pdf_file_v1.pdf",
-    "test_file.mov"
+    ""
   ],
-  "keywords": "zip,file",
+  "keywords": "",
   "metadata": {
-    "key3": "value3"
+    "": ""
   }
 }

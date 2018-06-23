@@ -1,9 +1,9 @@
 {
-  "data": "test_file.mov",
-  "name": "test_file",
-  "contentType": "VIDEO_QUICKTIME",
-  "keywords": "plain,binary",
+  "data": "",
+  "name": "",
+  "contentType": "",
+  "keywords": "",
   "metadata": {
-    "key1": "value1"
+    "": ""
   }
 }

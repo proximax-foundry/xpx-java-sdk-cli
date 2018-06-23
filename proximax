@@ -1,3 +1,4 @@
 #!/bin/bash
 # proximax
-java -jar /Users/zytfo/Desktop/ProximaX/xpx-cli/target/xpx-cli-1.0.0-SNAPSHOT.jar $*
+# {$} is a directory where you store the project
+java -jar {$}/xpx-cli/target/xpx-cli-1.0.0-SNAPSHOT.jar $@

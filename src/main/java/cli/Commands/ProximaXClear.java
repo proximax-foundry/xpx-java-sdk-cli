@@ -4,8 +4,11 @@ import com.github.rvesse.airline.annotations.Command;
 
 import java.io.File;
 
+/**
+ * Clear your public and private keys.
+ */
 @Command(name = "clear",
-        description = "Remove your private/public key")
+        description = "Remove your public/private key")
 public class ProximaXClear implements ProximaXCommand {
 
     @Override

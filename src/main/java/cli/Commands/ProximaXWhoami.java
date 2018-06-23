@@ -7,8 +7,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+/**
+ * Shows your public and private keys.
+ */
 @Command(name = "whoami",
-        description = "Check the private key you have")
+        description = "Check the private key that you have")
 public class ProximaXWhoami implements ProximaXCommand {
 
     @Override

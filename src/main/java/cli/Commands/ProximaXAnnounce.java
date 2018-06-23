@@ -5,8 +5,12 @@ import com.github.rvesse.airline.annotations.Command;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+/**
+ * Private and public keys setting to use a ProximaX SDK.
+ * Run `proximax announce -p privateKey -b publicKey` to set credentials.
+ */
 @Command(name = "announce",
-        description = "Set credentials for ProximaX SDK")
+        description = "Set credentials to use a ProximaX SDK")
 public class ProximaXAnnounce extends ProximaXCredentials {
 
     @Override

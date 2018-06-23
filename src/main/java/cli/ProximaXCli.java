@@ -6,14 +6,42 @@ import com.github.rvesse.airline.builder.CliBuilder;
 import com.github.rvesse.airline.parser.errors.*;
 import io.nem.xpx.facade.connection.RemotePeerConnection;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+
+/**
+ * Main class. Define the commands we have in a CLI.
+ */
 public class ProximaXCli {
 
     public static RemotePeerConnection remotePeerConnection = new RemotePeerConnection("http://dev-gateway.internal.proximax.io:8881");
+    public static String publicKey;
+    public static String privateKey;
+
+    private static void readCredentials() {
+        File file = new File("./credentials");
+        if (file.exists()) {
+            Scanner input = null;
+            try {
+                input = new Scanner(file);
+                privateKey = input.nextLine();
+                publicKey = input.nextLine();
+            } catch (FileNotFoundException ex) {
+                ex.printStackTrace();
+            } finally {
+                if (input != null) {
+                    input.close();
+                }
+            }
+        }
+    }
 
     public static void main(String... args) {
 
         Cli<ProximaXCommand> proximaxCommandCLI = getProximaXCommandCLI();
-
+        readCredentials();
         ProximaXCommand command;
 
         try {

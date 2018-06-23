@@ -21,12 +21,12 @@ import java.util.Scanner;
 import java.util.concurrent.ExecutionException;
 
 import static cli.ProximaXCli.remotePeerConnection;
+import static cli.ProximaXCli.privateKey;
+import static cli.ProximaXCli.publicKey;
 
 @Command(name = "search",
         description = "Search using Keywords")
 public class ProximaXSearch implements ProximaXCommand {
-    private String publicKey;
-    private String privateKey;
 
     @Option(type = OptionType.COMMAND,
             name = {"-k", "--keyword"},
@@ -52,46 +52,30 @@ public class ProximaXSearch implements ProximaXCommand {
             description = "Value to search")
     protected String value = "";
 
-    private void readCredentials() {
-        File file = new File("./credentials");
-        if (file.exists()) {
-            Scanner input = null;
+    @Override
+    public void run() {
+        if (privateKey != null && publicKey != null) {
             try {
-                input = new Scanner(file);
-                privateKey = input.nextLine();
-                publicKey = input.nextLine();
-            } catch (FileNotFoundException ex) {
-                ex.printStackTrace();
-            } finally {
-                if (input != null) {
-                    input.close();
+                Search search = new Search(remotePeerConnection);
+                if (!keyword.equals("") && name.equals("") && key.equals("") && value.equals("")) {
+                    List<ResourceHashMessageJsonEntity> result = search.searchByKeyword(privateKey, publicKey, keyword);
+                    System.out.println(result);
+                } else if (keyword.equals("") && !name.equals("") && key.equals("") && value.equals("")) {
+                    List<ResourceHashMessageJsonEntity> result = search.searchByName(privateKey, publicKey, name);
+                    System.out.println(result);
+                } else if (keyword.equals("") && keyword.equals("") && !key.equals("") && !value.equals("")) {
+                    List<ResourceHashMessageJsonEntity> result = search.searchByMetaDataKeyValue(privateKey, publicKey, key, value);
+                    System.out.println(result);
+                } else {
+                    System.out.println("Check your query or run `proximax help search` to see the help.");
                 }
+            } catch (ApiException | InterruptedException | ExecutionException | PeerConnectionNotFoundException e) {
+                e.printStackTrace();
             }
+            System.exit(0);
         } else {
             System.out.println("You have to set the private/public key. Run `proximax help announce` to see the help.");
         }
     }
 
-    @Override
-    public void run() {
-        try {
-            readCredentials();
-            Search search = new Search(remotePeerConnection);
-            if (!keyword.equals("") && name.equals("") && key.equals("") && value.equals("")) {
-                List<ResourceHashMessageJsonEntity> result = search.searchByKeyword(privateKey, publicKey, keyword);
-                System.out.println(result);
-            } else if (keyword.equals("") && !name.equals("") && key.equals("") && value.equals("")) {
-                List<ResourceHashMessageJsonEntity> result = search.searchByName(privateKey, publicKey, name);
-                System.out.println(result);
-            } else if (keyword.equals("") && keyword.equals("") && !key.equals("") && !value.equals("")) {
-                List<ResourceHashMessageJsonEntity> result = search.searchByMetaDataKeyValue(privateKey, publicKey, key, value);
-                System.out.println(result);
-            } else {
-                System.out.println("Check your query or run `proximax help search` to see the help.");
-            }
-        } catch (ApiException | InterruptedException | ExecutionException | PeerConnectionNotFoundException e) {
-            e.printStackTrace();
-        }
-        System.exit(0);
-    }
 }

@@ -1,10 +1,10 @@
 {
-  "data": "Its my example of a string",
-  "name": "test_name_1",
-  "contentType": "",
+  "data": "my string data example",
+  "name": "instance",
+  "contentType": "TEXT",
   "encoding": "UTF-8",
-  "keywords": "example,words",
+  "keywords": "",
   "metadata": {
-    "key1": "value1"
+    "": ""
   }
 }

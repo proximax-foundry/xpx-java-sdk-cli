@@ -1,8 +1,8 @@
 A CLI for a ProximaX Java SDK
 =============================
 
-INSTALLATION
-------------
+## INSTALLATION
+
 
 1. `mvn package`
 
@@ -12,7 +12,7 @@ INSTALLATION
     #!/bin/bash
     # proximax
     # {$} is a directory where you store the project
-    java -jar "{$}/xpx-cli/target/xpx-cli-1.0.0-SNAPSHOT.jar" "$@"
+    java -jar {$}/xpx-cli/target/xpx-cli-1.0.0-SNAPSHOT.jar $@
     ```
 3. `chmod +x proximax`
  
@@ -23,8 +23,8 @@ INSTALLATION
 5. Run `proximax` from anywhere
 
 
-CURRENT COMMANDS
-----------------
+## CURRENT COMMANDS
+
 ```
 >proximax help
 usage: proximax <command> [ <args> ]
@@ -42,8 +42,31 @@ Commands are:
 See 'proximax help <command>' for more information on a specific command.
 ```
 
-SEARCH
-______
+#### ANNOUNCE
+
+To use a ProximaX SDK you have to provide a private and public keys.
+
+```
+>proximax help announce
+NAME
+        proximax announce - Set credentials to use a ProximaX SDK
+
+SYNOPSIS
+        proximax announce [ {-b | --public} <Receiver public key> ]
+                [ {-p | --private} <Sender private key> ]
+
+OPTIONS
+        -b <Receiver public key>, --public <Receiver public key>
+            Receiver public key
+
+        -p <Sender private key>, --private <Sender private key>
+            Private key to announce yourself to NEM blockchain
+```
+
+After running `proximax announce -p privateKey -b publicKey` your pair will be written in credentials file in the root folder.
+
+To remove your private/public pair run `proximax clear` or just delete `credentials` file from your computer. 
+#### SEARCH
 
 ```
 >proximax help search
@@ -69,8 +92,7 @@ OPTIONS
             Value to search
 ```
 
-DOWNLOAD
-________
+#### DOWNLOAD
 
 ```
 >proximax help download
@@ -97,8 +119,7 @@ OPTIONS
 
 You can set the NEM hash at `configs/download.json`.
 
-UPLOAD
-________
+#### UPLOAD
 
 ```
 >proximax help upload
@@ -107,7 +128,8 @@ NAME
 
 SYNOPSIS
         proximax upload [ {-b | --binary} ] [ {-f | --file} ]
-                [ {-m | --multiple} ] [ {-t | --text} ] [ {-z | --zip} ]
+                [ {-m | --multiple} ] [ {-p | --path} ] [ {-t | --text} ]
+                [ {-u | --url} ] [ {-z | --zip} ]
 
 OPTIONS
         -b, --binary
@@ -119,21 +141,30 @@ OPTIONS
         -m, --multiple
             Upload multiple files
 
+        -p, --path
+            Upload the file using path
+
         -t, --text
             Upload text file
+
+        -u, --url
+            Upload the file using url
 
         -z, --zip
             Upload ZipFile
 
 ```
 
-There are 5 types of upload:
+There are 7 types of upload:
 1. Binary file.
 2. Plain file.
 3. Text file.
 4. Multiple files.
 5. Zip archive file.
+6. Path upload.
+7. Url upload.
 
+You can use `-p` flag to set the absolute path of your file in your Linux machine or you can just add your file in `files` folder. 
 For each of them you have to provide a particular data.
 
 ###
@@ -195,6 +226,30 @@ For each of them you have to provide a particular data.
   "file": [
     ""
   ],
+  "keywords": "",
+  "metadata": {
+    "": ""
+  }
+}
+```
+
+- `Path` files at `configs/uploadPath.json`
+```
+{
+  "path": "",
+  "keywords": "",
+  "metadata": {
+    "": ""
+  }
+}
+
+```
+
+- `Url` files at `configs/uploadUrl.json`
+```
+{
+  "url": "",
+  "name": "",
   "keywords": "",
   "metadata": {
     "": ""
