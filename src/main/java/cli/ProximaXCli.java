@@ -4,10 +4,16 @@ import cli.Commands.*;
 import com.github.rvesse.airline.Cli;
 import com.github.rvesse.airline.builder.CliBuilder;
 import com.github.rvesse.airline.parser.errors.*;
+import io.nem.xpx.facade.connection.LocalHttpPeerConnection;
 import io.nem.xpx.facade.connection.RemotePeerConnection;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.nem.core.node.NodeEndpoint;
+import static java.lang.Math.toIntExact;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.Scanner;
 
 
@@ -16,7 +22,31 @@ import java.util.Scanner;
  */
 public class ProximaXCli {
 
-    public static RemotePeerConnection remotePeerConnection = new RemotePeerConnection("http://dev-gateway.internal.proximax.io:8881");
+    public static RemotePeerConnection remotePeerConnection;
+    public static LocalHttpPeerConnection localPeerConnection;
+
+
+    private static void createConnection() {
+        JSONParser parser = new JSONParser();
+        File file = new File("");
+        try {
+            Object fileObj = parser.parse(new FileReader(file.getAbsolutePath() + "/configs/connection.json"));
+            JSONObject object = (JSONObject) fileObj;
+
+            JSONObject remote = (JSONObject) object.get("remote");
+            String url = (String) remote.get("url");
+            remotePeerConnection = new RemotePeerConnection(url);
+
+            JSONObject local = (JSONObject) object.get("local");
+            String protocol = (String) local.get("protocol");
+            String host = (String) local.get("host");
+            int port = toIntExact((Long) local.get("port"));
+            localPeerConnection = new LocalHttpPeerConnection(new NodeEndpoint(protocol, host, port));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public static String publicKey;
     public static String privateKey;
 
@@ -42,6 +72,7 @@ public class ProximaXCli {
 
         Cli<ProximaXCommand> proximaxCommandCLI = getProximaXCommandCLI();
         readCredentials();
+        createConnection();
         ProximaXCommand command;
 
         try {

@@ -17,9 +17,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
 
-import static cli.ProximaXCli.privateKey;
-import static cli.ProximaXCli.publicKey;
-import static cli.ProximaXCli.remotePeerConnection;
+import static cli.ProximaXCli.*;
 
 /**
  * Downloads the file.
@@ -52,9 +50,22 @@ public class ProximaXDownload implements ProximaXCommand {
             description = "Download text file")
     protected boolean isText = false;
 
+    @Option(type = OptionType.COMMAND,
+            name = {"-r", "--remote"},
+            title = "remote connection",
+            description = "Remote connection")
+    protected boolean isRemote = false;
+
+    @Option(type = OptionType.COMMAND,
+            name = {"-l", "--local"},
+            title = "local connection",
+            description = "Local connection")
+    protected boolean isLocal = false;
+
 
     @Override
     public void run() {
+        Download download = null;
         if (privateKey != null && publicKey != null) {
             JSONParser parser = new JSONParser();
             File file = new File(".");
@@ -68,7 +79,14 @@ public class ProximaXDownload implements ProximaXCommand {
                 e.printStackTrace();
             }
 
-            Download download = new Download(remotePeerConnection);
+            if (!isLocal && isRemote) {
+                download = new Download(remotePeerConnection);
+            } else if (isLocal && !isRemote) {
+                download = new Download(localPeerConnection);
+            } else {
+                System.out.println("You have to choose either `-r` (remote connection) or `-l` (local connection). Run `proximax help search` to see the help.");
+                System.exit(0);
+            }
 
             try {
                 if (isSecure) {

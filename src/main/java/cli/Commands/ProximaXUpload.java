@@ -4,6 +4,8 @@ import com.github.rvesse.airline.annotations.Command;
 import com.github.rvesse.airline.annotations.Option;
 import com.github.rvesse.airline.annotations.OptionType;
 import io.nem.xpx.facade.upload.*;
+
+import static cli.ProximaXCli.*;
 import static io.nem.xpx.facade.DataTextContentType.TEXT_HTML;
 import static io.nem.xpx.facade.DataTextContentType.TEXT_PLAIN;
 import org.apache.commons.io.FileUtils;
@@ -18,9 +20,6 @@ import java.net.URL;
 import java.util.*;
 
 import static java.util.Collections.singletonMap;
-import static cli.ProximaXCli.remotePeerConnection;
-import static cli.ProximaXCli.privateKey;
-import static cli.ProximaXCli.publicKey;
 import static org.apache.http.protocol.HTTP.ASCII;
 
 /**
@@ -72,16 +71,36 @@ public class ProximaXUpload implements ProximaXCommand {
             description = "Upload the file using url")
     protected boolean isUrl;
 
+    @Option(type = OptionType.COMMAND,
+            name = {"-r", "--remote"},
+            title = "remote connection",
+            description = "Remote connection")
+    protected boolean isRemote = false;
+
+    @Option(type = OptionType.COMMAND,
+            name = {"-l", "--local"},
+            title = "local connection",
+            description = "Local connection")
+    protected boolean isLocal = false;
+
     @Override
     public void run() {
+        Upload upload = null;
         if (privateKey != null && publicKey != null) {
-            Upload upload = new Upload(remotePeerConnection);
             JSONParser parser = new JSONParser();
             File file = new File("");
             String keywords;
             Map<String, String> metadata;
             String key, value;
             try {
+                if (!isLocal && isRemote) {
+                    upload = new Upload(remotePeerConnection);
+                } else if (isLocal && !isRemote) {
+                    upload = new Upload(localPeerConnection);
+                } else {
+                    System.out.println("You have to choose either `-r` (remote connection) or `-l` (local connection). Run `proximax help search` to see the help.");
+                    System.exit(0);
+                }
                 if (isBinary && !isFile && !isZip && !isMultiple && !isText && !isUrl && !isPath) {
                     String data, name, contentType;
                     try {

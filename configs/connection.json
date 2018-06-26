@@ -1,0 +1,10 @@
+{
+  "remote": {
+    "url": "http://dev-gateway.internal.proximax.io:8881"
+  },
+  "local": {
+    "protocol": "http",
+    "host": "104.128.226.60",
+    "port": 7890
+  }
+}

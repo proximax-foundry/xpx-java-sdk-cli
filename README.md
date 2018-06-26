@@ -20,7 +20,9 @@ A CLI for a ProximaX Java SDK
 
     ```cp proximax /usr/local/bin```
 
-5. Run `proximax` from anywhere
+5. Check connection configuration at `configs/connection.json` 
+
+6. Run `proximax` from anywhere and don't forget to use either `-r` (remote connection) flag or `-l` (local connection)  flag
 
 
 ## CURRENT COMMANDS
@@ -75,7 +77,8 @@ NAME
 
 SYNOPSIS
         proximax search [ {-k | --keyword} <keyword> ]
-                [ -key <meta data key/value> ] [ {-n | --name} <name> ]
+                [ -key <meta data key/value> ] [ {-l | --local} ]
+                [ {-n | --name} <name> ] [ {-r | --remote} ]
                 [ -value <meta data key/value> ]
 
 OPTIONS
@@ -85,8 +88,14 @@ OPTIONS
         -key <meta data key/value>
             Key to search
 
+        -l, --local
+            Local connection
+
         -n <name>, --name <name>
             Search by name
+
+        -r, --remote
+            Remote connection
 
         -value <meta data key/value>
             Value to search
@@ -97,24 +106,31 @@ OPTIONS
 ```
 >proximax help download
 NAME
-     proximax download - Download the file
+        proximax download - Download the file
 
 SYNOPSIS
-     proximax download [ {-b | --binary} ] [ {-f | --file} ]
-             [ {-s | --secure} ] [ {-t | --text} ]
+        proximax download [ {-b | --binary} ] [ {-f | --file} ]
+                [ {-l | --local} ] [ {-r | --remote} ] [ {-s | --secure} ]
+                [ {-t | --text} ]
 
 OPTIONS
-     -b, --binary
-         Download binary file
+        -b, --binary
+            Download binary file
 
-     -f, --file
-         Download file
+        -f, --file
+            Download file
 
-     -s, --secure
-         Apply NEM keys privacy strategy
+        -l, --local
+            Local connection
 
-     -t, --text
-         Download text file
+        -r, --remote
+            Remote connection
+
+        -s, --secure
+            Apply NEM keys privacy strategy
+
+        -t, --text
+            Download text file
 ```
 
 You can set the NEM hash at `configs/download.json`.
@@ -128,8 +144,9 @@ NAME
 
 SYNOPSIS
         proximax upload [ {-b | --binary} ] [ {-f | --file} ]
-                [ {-m | --multiple} ] [ {-p | --path} ] [ {-t | --text} ]
-                [ {-u | --url} ] [ {-z | --zip} ]
+                [ {-l | --local} ] [ {-m | --multiple} ] [ {-p | --path} ]
+                [ {-r | --remote} ] [ {-t | --text} ] [ {-u | --url} ]
+                [ {-z | --zip} ]
 
 OPTIONS
         -b, --binary
@@ -138,11 +155,17 @@ OPTIONS
         -f, --file
             Upload plain file
 
+        -l, --local
+            Local connection
+
         -m, --multiple
             Upload multiple files
 
         -p, --path
             Upload the file using path
+
+        -r, --remote
+            Remote connection
 
         -t, --text
             Upload text file
@@ -152,7 +175,6 @@ OPTIONS
 
         -z, --zip
             Upload ZipFile
-
 ```
 
 There are 7 types of upload:

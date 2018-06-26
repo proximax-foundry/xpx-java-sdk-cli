@@ -20,9 +20,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.ExecutionException;
 
-import static cli.ProximaXCli.remotePeerConnection;
-import static cli.ProximaXCli.privateKey;
-import static cli.ProximaXCli.publicKey;
+import static cli.ProximaXCli.*;
 
 @Command(name = "search",
         description = "Search using Keywords")
@@ -52,11 +50,31 @@ public class ProximaXSearch implements ProximaXCommand {
             description = "Value to search")
     protected String value = "";
 
+    @Option(type = OptionType.COMMAND,
+            name = {"-r", "--remote"},
+            title = "remote connection",
+            description = "Remote connection")
+    protected boolean isRemote = false;
+
+    @Option(type = OptionType.COMMAND,
+            name = {"-l", "--local"},
+            title = "local connection",
+            description = "Local connection")
+    protected boolean isLocal = false;
+
     @Override
     public void run() {
+        Search search = null;
         if (privateKey != null && publicKey != null) {
             try {
-                Search search = new Search(remotePeerConnection);
+                if (!isLocal && isRemote) {
+                    search = new Search(remotePeerConnection);
+                } else if (isLocal && !isRemote) {
+                    search = new Search(localPeerConnection);
+                } else {
+                    System.out.println("You have to choose either `-r` (remote connection) or `-l` (local connection). Run `proximax help search` to see the help.");
+                    System.exit(0);
+                }
                 if (!keyword.equals("") && name.equals("") && key.equals("") && value.equals("")) {
                     List<ResourceHashMessageJsonEntity> result = search.searchByKeyword(privateKey, publicKey, keyword);
                     System.out.println(result);
