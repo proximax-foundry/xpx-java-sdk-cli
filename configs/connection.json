@@ -1,0 +1,12 @@
+{
+  "remote": {
+    "url": "http://dev-gateway.internal.proximax.io:8881"
+  },
+  "local": {
+    "network": "testnet",
+    "protocol": "http",
+    "host": "104.128.226.60",
+    "port": 7890,
+    "multiaddress": "/ip4/127.0.0.1/tcp/5001"
+  }
+}
