@@ -7,7 +7,7 @@
     <groupId>io.nem.xpx</groupId>
     <artifactId>xpx-cli</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>0.1.0-beta.1-SNAPSHOT</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
