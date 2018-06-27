@@ -21,6 +21,7 @@ import java.util.Scanner;
 import java.util.concurrent.ExecutionException;
 
 import static cli.ProximaXCli.*;
+import static cli.ProximaXCli.createRemotePeerConnection;
 
 @Command(name = "search",
         description = "Search using Keywords")
@@ -68,9 +69,9 @@ public class ProximaXSearch implements ProximaXCommand {
         if (privateKey != null && publicKey != null) {
             try {
                 if (!isLocal && isRemote) {
-                    search = new Search(remotePeerConnection);
+                    search = new Search(createRemotePeerConnection());
                 } else if (isLocal && !isRemote) {
-                    search = new Search(localPeerConnection);
+                    search = new Search(createLocalHttpPeerConnection());
                 } else {
                     System.out.println("You have to choose either `-r` (remote connection) or `-l` (local connection). Run `proximax help search` to see the help.");
                     System.exit(0);

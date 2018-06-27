@@ -6,6 +6,7 @@ import com.github.rvesse.airline.builder.CliBuilder;
 import com.github.rvesse.airline.parser.errors.*;
 import io.nem.xpx.facade.connection.LocalHttpPeerConnection;
 import io.nem.xpx.facade.connection.RemotePeerConnection;
+import io.nem.xpx.factory.ConnectionFactory;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.nem.core.node.NodeEndpoint;
@@ -22,11 +23,10 @@ import java.util.Scanner;
  */
 public class ProximaXCli {
 
-    public static RemotePeerConnection remotePeerConnection;
-    public static LocalHttpPeerConnection localPeerConnection;
+    private static RemotePeerConnection remotePeerConnection;
+    private static LocalHttpPeerConnection localPeerConnection;
 
-
-    private static void createConnection() {
+    public static RemotePeerConnection createRemotePeerConnection() {
         JSONParser parser = new JSONParser();
         File file = new File("");
         try {
@@ -37,14 +37,33 @@ public class ProximaXCli {
             String url = (String) remote.get("url");
             remotePeerConnection = new RemotePeerConnection(url);
 
-            JSONObject local = (JSONObject) object.get("local");
-            String protocol = (String) local.get("protocol");
-            String host = (String) local.get("host");
-            int port = toIntExact((Long) local.get("port"));
-            localPeerConnection = new LocalHttpPeerConnection(new NodeEndpoint(protocol, host, port));
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return remotePeerConnection;
+    }
+
+    public static LocalHttpPeerConnection createLocalHttpPeerConnection() {
+        JSONParser parser = new JSONParser();
+        File file = new File("");
+        try {
+            Object fileObj = parser.parse(new FileReader(file.getAbsolutePath() + "/configs/connection.json"));
+            JSONObject object = (JSONObject) fileObj;
+
+            JSONObject local = (JSONObject) object.get("local");
+            String network = (String) local.get("network");
+            String protocol = (String) local.get("protocol");
+            String host = (String) local.get("host");
+            int port = toIntExact((Long) local.get("port"));
+            String multiaddress = (String) local.get("multiaddress");
+            localPeerConnection = new LocalHttpPeerConnection(
+                    ConnectionFactory.createNemNodeConnection(network, protocol, host, port),
+                    ConnectionFactory.createIPFSNodeConnection(multiaddress)
+            );
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return localPeerConnection;
     }
 
     public static String publicKey;
@@ -72,7 +91,6 @@ public class ProximaXCli {
 
         Cli<ProximaXCommand> proximaxCommandCLI = getProximaXCommandCLI();
         readCredentials();
-        createConnection();
         ProximaXCommand command;
 
         try {
@@ -93,6 +111,7 @@ public class ProximaXCli {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        System.exit(0);
     }
 
     private static Cli<ProximaXCommand> getProximaXCommandCLI() {

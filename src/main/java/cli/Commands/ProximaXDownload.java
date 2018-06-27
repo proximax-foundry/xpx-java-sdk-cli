@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 import static cli.ProximaXCli.*;
+import static cli.ProximaXCli.createRemotePeerConnection;
 
 /**
  * Downloads the file.
@@ -80,9 +81,9 @@ public class ProximaXDownload implements ProximaXCommand {
             }
 
             if (!isLocal && isRemote) {
-                download = new Download(remotePeerConnection);
+                download = new Download(createRemotePeerConnection());
             } else if (isLocal && !isRemote) {
-                download = new Download(localPeerConnection);
+                download = new Download(createLocalHttpPeerConnection());
             } else {
                 System.out.println("You have to choose either `-r` (remote connection) or `-l` (local connection). Run `proximax help search` to see the help.");
                 System.exit(0);

@@ -94,9 +94,9 @@ public class ProximaXUpload implements ProximaXCommand {
             String key, value;
             try {
                 if (!isLocal && isRemote) {
-                    upload = new Upload(remotePeerConnection);
+                    upload = new Upload(createRemotePeerConnection());
                 } else if (isLocal && !isRemote) {
-                    upload = new Upload(localPeerConnection);
+                    upload = new Upload(createLocalHttpPeerConnection());
                 } else {
                     System.out.println("You have to choose either `-r` (remote connection) or `-l` (local connection). Run `proximax help search` to see the help.");
                     System.exit(0);
