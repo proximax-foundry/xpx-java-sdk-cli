@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>io.nem.xpx</groupId>
+    <groupId>io.proximax</groupId>
     <artifactId>xpx-cli</artifactId>
     <packaging>jar</packaging>
     <version>0.1.0-beta.1-SNAPSHOT</version>
@@ -12,6 +12,13 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+    <repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
 
     <dependencies>
         <dependency>
@@ -26,9 +33,9 @@
             <version>2.5.0</version>
         </dependency>
         <dependency>
-            <groupId>io.nem.xpx</groupId>
+            <groupId>io.proximax</groupId>
             <artifactId>xpx-java-sdk</artifactId>
-            <version>0.1.0-beta.3</version>
+            <version>0.1.0-beta.10</version>
         </dependency>
         <dependency>
             <groupId>com.googlecode.json-simple</groupId>
