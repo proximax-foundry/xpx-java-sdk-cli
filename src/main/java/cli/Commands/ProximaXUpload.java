@@ -3,11 +3,11 @@ package cli.Commands;
 import com.github.rvesse.airline.annotations.Command;
 import com.github.rvesse.airline.annotations.Option;
 import com.github.rvesse.airline.annotations.OptionType;
-import io.nem.xpx.facade.upload.*;
+import io.proximax.xpx.facade.upload.*;
 
 import static cli.ProximaXCli.*;
-import static io.nem.xpx.facade.DataTextContentType.TEXT_HTML;
-import static io.nem.xpx.facade.DataTextContentType.TEXT_PLAIN;
+import static io.proximax.xpx.facade.DataTextContentType.TEXT_HTML;
+import static io.proximax.xpx.facade.DataTextContentType.TEXT_PLAIN;
 import org.apache.commons.io.FileUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
