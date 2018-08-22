@@ -43,9 +43,9 @@
             <version>1.1.1</version>
         </dependency>
         <dependency>
-            <groupId>org.nem.core</groupId>
-            <artifactId>nem-core</artifactId>
-            <version>LATEST</version>
+            <groupId>com.github.NemProject</groupId>
+            <artifactId>nem.core</artifactId>
+            <version>v0.6.96</version>
         </dependency>
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
