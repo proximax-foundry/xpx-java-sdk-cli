@@ -3,10 +3,13 @@ A CLI for a ProximaX Java SDK
 
 ## INSTALLATION
 
+1. Install dependencies: `yum install maven git java-1.8.0-openjdk java-1.8.0-openjdk-devel`
 
-1. `mvn package`
+2. Clone repository: `git clone https://github.com/proximax-storage-foundry/xpx-java-sdk-cli`
 
-2. Get the full path for the /target/xpx-cli-0.1.0-beta.1-SNAPSHOT.jar and add it in `proximax` script:
+3. Change directory `cd xpx-java-sdk-cli` and build `mvn package`
+
+4. Get the full path for the /target/xpx-cli-0.1.0-beta.1-SNAPSHOT.jar and add it in `proximax` script:
 
     ```
     #!/bin/bash
@@ -14,15 +17,15 @@ A CLI for a ProximaX Java SDK
     # {$} is a directory where you store the project
     java -jar {$}/xpx-cli/target/xpx-cli-0.1.0-beta.1-SNAPSHOT.jar $@
     ```
-3. `chmod +x proximax`
+5. `chmod +x proximax`
  
-4. Copy the script to your local bin to execute 
+6. Copy the script to your local bin to execute 
 
     ```cp proximax /usr/local/bin```
 
-5. Check connection configuration at `configs/connection.json` 
+7. Check connection configuration at `configs/connection.json` 
 
-6. Run `proximax` from anywhere and don't forget to use either `-r` (remote connection) flag or `-l` (local connection)  flag
+8. Run `proximax` from anywhere and don't forget to use either `-r` (remote connection) flag or `-l` (local connection)  flag
 
 
 ## CURRENT COMMANDS
